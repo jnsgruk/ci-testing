@@ -1,9 +1,9 @@
-name: 🚢 Release to latest/candidate
+name: Release
 
 on:
   # Run the workflow each time new commits are pushed to the candidate branch. 
   push:
-    branches: [ "main" ]
+    branches: [ "candidate" ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -12,6 +12,7 @@ concurrency:
 permissions:
   contents: read
   issues: write
+  actions: read
 
 jobs:
   get-architectures:
@@ -23,7 +24,7 @@ jobs:
     steps:
       - name: 🖥 Get snap architectures
         id: get-architectures
-        uses: jnsgruk/snapcrafters-ci/get-architectures@main
+        uses: snapcrafters/ci/get-architectures@main
 
   release:
     name: 🚢 Release to latest/candidate
@@ -35,12 +36,12 @@ jobs:
         architecture: ${{ fromJSON(needs.get-architectures.outputs.architectures-list) }}
     steps:
       - name: 🚢 Release to latest/candidate
-        uses: jnsgruk/snapcrafters-ci/release-to-candidate@main
+        uses: snapcrafters/ci/release-to-candidate@main
         with:
           architecture: ${{ matrix.architecture }}
           launchpad-token: ${{ secrets.LP_BUILD_SECRET }}
           store-token: ${{ secrets.SNAP_STORE_CANDIDATE }}
-  
+
   call-for-testing:
     name: 📣 Create call for testing
     needs: [release, get-architectures]
@@ -51,12 +52,13 @@ jobs:
     steps:
       - name: 📣 Create call for testing
         id: issue
-        uses: jnsgruk/snapcrafters-ci/call-for-testing@main
+        uses: snapcrafters/ci/call-for-testing@main
         with:
           architectures: ${{ needs.get-architectures.outputs.architectures }}
+          ci-repo: "snapcrafters/ci"
           github-token: ${{ secrets.GITHUB_TOKEN }}
           store-token: ${{ secrets.SNAP_STORE_CANDIDATE }}
-  
+
   screenshots:
     name: 📸 Gather screenshots
     needs: call-for-testing
@@ -64,8 +66,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 📸 Gather screenshots
-        uses: jnsgruk/snapcrafters-ci/get-screenshots@main
+        uses: snapcrafters/ci/get-screenshots@main
         with:
+          ci-repo: "snapcrafters/ci"
           issue-number: ${{ needs.call-for-testing.outputs.issue-number }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          screenshots-repo: "jnsgruk/ci-screenshots"
           screenshots-token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}

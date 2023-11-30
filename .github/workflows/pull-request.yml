@@ -1,0 +1,10 @@
+name: 🧪 Build snap on amd64
+
+on:
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  build:
+    name: 🧪 Build snap on amd64
+    uses: jnsgruk/snapcrafters-ci/.github/workflows/build-snap.yaml@main

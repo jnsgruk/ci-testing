@@ -1,0 +1,16 @@
+name: ⬆️ Promote to stable
+
+on:
+  issue_comment:
+    types:
+      - created
+
+permissions:
+  issues: write
+
+jobs:
+  promote:
+    name: ⬆️ Promote to stable
+    uses: jnsgruk/snapcrafters-ci/.github/workflows/promote-to-stable.yaml@main
+    secrets:
+      SNAP_STORE_STABLE: ${{ secrets.SNAP_STORE_STABLE }}

@@ -7,4 +7,7 @@ on:
 jobs:
   build:
     name: 🧪 Build snap on amd64
-    uses: jnsgruk/snapcrafters-ci/test-snap-build@main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build snap
+        uses: jnsgruk/snapcrafters-ci/test-snap-build@main

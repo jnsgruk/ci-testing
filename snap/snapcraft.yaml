@@ -1,49 +1,45 @@
-name: terraform
-version: "1.6.5"
-summary: Terraform enables you to create, change, and improve infrastructure.
-license: MPL-2.0
+name: ci-testing
+version: 0.2.2
+summary: HTTP file serve & URL shortener
+license: Apache-2.0
 contact: jon.seager@canonical.com
-issues: https://github.com/jnsgruk/terraform/issues
-source-code: https://github.com/jnsgruk/terraform
-website: https://terraform.io
+issues: https://github.com/jnsgruk/gosherve/issues
+source-code: https://github.com/jnsgruk/gosherve
+website: https://gosherve.io
 description: |
-  Terraform enables you to safely and predictably create, change, and improve
-  infrastructure. It is an open source tool that codifies APIs into
-  declarative configuration files that can be shared amongst team members,
-  treated as code, edited, reviewed, and versioned.
+  A simple HTTP file server with some basic URL shortening/redirect functionality.
 base: core22
 grade: stable
-confinement: classic
+confinement: strict
 compression: lzo
 
 apps:
-  terraform:
-    command: terraform
+  ci-testing:
+    command: gosherve
+    plugs:
+      - home
+      - network
+      - network-bind
 
 architectures:
   - build-on: amd64
-  - build-on: armhf
   - build-on: arm64
-  - build-on: s390x
-  - build-on: ppc64el
 
 parts:
-  terraform:
+  gosherve:
     plugin: go
-    source: https://github.com/hashicorp/terraform
+    source: https://github.com/jnsgruk/gosherve
     source-type: git
-    source-tag: "v$SNAPCRAFT_PROJECT_VERSION"
+    source-tag: "$SNAPCRAFT_PROJECT_VERSION"
     build-snaps: [go]
     build-environment:
       - CGO_ENABLED: "0"
-      - GOFLAGS: "-mod=readonly"
       - LDFLAGS: "-s -w"
     override-build: |
-      export LDFLAGS="${LDFLAGS} -X 'github.com/hashicorp/terraform/version.Prerelease='"
-      export LDFLAGS="${LDFLAGS} -X 'github.com/hashicorp/terraform/version.Version=$(cat version/VERSION)'"
+      export LDFLAGS="${LDFLAGS} -X 'main.version=${SNAPCRAFT_PROJECT_VERSION}'"
+      export LDFLAGS="${LDFLAGS} -X 'main.commit=$(git rev-parse HEAD)'"
 
-      go mod download
-      go build -ldflags "${LDFLAGS}"
-      cp terraform $SNAPCRAFT_PART_INSTALL/terraform
+      go build -ldflags "${LDFLAGS}" ./cmd/gosherve
+      cp gosherve $SNAPCRAFT_PART_INSTALL/gosherve
     stage:
-      - terraform
+      - gosherve

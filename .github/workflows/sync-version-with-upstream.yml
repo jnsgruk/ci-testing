@@ -1,4 +1,4 @@
-name: 🔄 Sync version with upstream
+name: Update
 
 on:
   # Runs at 10:00 UTC every day

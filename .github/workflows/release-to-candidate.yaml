@@ -1,4 +1,4 @@
-name: 🚢 Release to latest/candidate
+name: Release
 
 on:
   # Run the workflow each time new commits are pushed to the candidate branch. 

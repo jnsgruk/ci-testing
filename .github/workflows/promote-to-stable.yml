@@ -1,4 +1,4 @@
-name: ⬆️ Promote to stable
+name: Promote
 
 on:
   issue_comment:

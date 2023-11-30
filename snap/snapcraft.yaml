@@ -2,7 +2,7 @@ name: ci-testing
 version: 0.2.3
 summary: HTTP file serve & URL shortener
 license: Apache-2.0
-contact: jon.seager@canonical.com
+contact: jon@sgrs.uk
 issues: https://github.com/jnsgruk/gosherve/issues
 source-code: https://github.com/jnsgruk/gosherve
 website: https://gosherve.io

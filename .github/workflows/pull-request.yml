@@ -7,4 +7,4 @@ on:
 jobs:
   build:
     name: 🧪 Build snap on amd64
-    uses: jnsgruk/snapcrafters-ci/.github/workflows/build-snap.yaml@main
+    uses: jnsgruk/snapcrafters-ci/test-snap-build@main

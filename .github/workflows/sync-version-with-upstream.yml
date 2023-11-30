@@ -10,7 +10,7 @@ on:
 jobs:
   sync:
     name: 🔄 Sync version with upstream
-    uses: jnsgruk/snapcrafters-ci/.github/workflows/sync-upstream-version.yaml@main
+    uses: jnsgruk/snapcrafters-ci/test-snap-build@main
     with:
       update-script: |
         VERSION=$(

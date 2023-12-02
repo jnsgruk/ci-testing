@@ -1,1 +1,1 @@
-A Testing repository.
+Testing repository.

@@ -1,5 +1,5 @@
 name: ci-testing
-version: 0.2.2
+version: 0.2.3
 summary: HTTP file serve & URL shortener
 license: Apache-2.0
 contact: jon.seager@canonical.com

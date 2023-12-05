@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🧪 Build snap on amd64
-        uses: snapcrafters/ci/test-snap-build@main
+        uses: jnsgruk/snapcrafters-ci/test-snap-build@find-snapcraft-yaml-action

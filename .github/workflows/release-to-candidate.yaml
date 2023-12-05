@@ -24,7 +24,7 @@ jobs:
     steps:
       - name: 🖥 Get snap architectures
         id: get-architectures
-        uses: snapcrafters/ci/get-architectures@main
+        uses: jnsgruk/snapcrafters-ci/get-architectures@find-snapcraft-yaml-action
 
   release:
     name: 🚢 Release to latest/candidate
@@ -36,7 +36,7 @@ jobs:
         architecture: ${{ fromJSON(needs.get-architectures.outputs.architectures-list) }}
     steps:
       - name: 🚢 Release to latest/candidate
-        uses: snapcrafters/ci/release-to-candidate@main
+        uses: jnsgruk/snapcrafters-ci/release-to-candidate@find-snapcraft-yaml-action
         with:
           architecture: ${{ matrix.architecture }}
           launchpad-token: ${{ secrets.LP_BUILD_SECRET }}
@@ -52,10 +52,10 @@ jobs:
     steps:
       - name: 📣 Create call for testing
         id: issue
-        uses: snapcrafters/ci/call-for-testing@main
+        uses: jnsgruk/snapcrafters-ci/call-for-testing@find-snapcraft-yaml-action
         with:
           architectures: ${{ needs.get-architectures.outputs.architectures }}
-          ci-repo: "snapcrafters/ci"
+          ci-repo: "jnsgruk/snapcrafters-ci"
           github-token: ${{ secrets.GITHUB_TOKEN }}
           store-token: ${{ secrets.SNAP_STORE_CANDIDATE }}
 
@@ -66,9 +66,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 📸 Gather screenshots
-        uses: snapcrafters/ci/get-screenshots@main
+        uses: jnsgruk/snapcrafters-ci/get-screenshots@find-snapcraft-yaml-action
         with:
-          ci-repo: "snapcrafters/ci"
+          ci-repo: "jnsgruk/snapcrafters-ci"
           issue-number: ${{ needs.call-for-testing.outputs.issue-number }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           screenshots-repo: "jnsgruk/ci-screenshots"

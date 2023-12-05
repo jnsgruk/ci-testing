@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🔄 Sync version with upstream
-        uses: jnsgruk/snapcrafters-ci/sync-version@find-snapcraft-yaml-action
+        uses: jnsgruk/snapcrafters-ci/sync-version@fix-snap-build-action
         with:
           token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
           update-script: |

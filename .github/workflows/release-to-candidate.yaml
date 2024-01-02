@@ -65,6 +65,8 @@ jobs:
     needs: call-for-testing
     environment: "Candidate Branch"
     runs-on: ubuntu-latest
+    env:
+      GOSHERVE_REDIRECT_MAP_URL: https://jnsgr.uk/routes
     steps:
       - name: 📸 Gather screenshots
         uses: jnsgruk/snapcrafters-ci/get-screenshots@fix-screenshots-symlinks

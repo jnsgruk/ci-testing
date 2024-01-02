@@ -3,11 +3,10 @@ version: 0.2.3
 summary: HTTP file serve & URL shortener
 license: Apache-2.0
 contact: jon.seager@canonical.com
-issues: https://github.com/jnsgruk/gosherve/issues
-source-code: https://github.com/jnsgruk/gosherve
-website: https://gosherve.io
+issues: https://github.com/jnsgruk/ci-testing/issues
+source-code: https://github.com/jnsgruk/ci-testing
 description: |
-  A simple HTTP file server with some basic URL shortening/redirect functionality.
+  A simple test application
 base: core22
 grade: stable
 confinement: strict
@@ -15,7 +14,7 @@ compression: lzo
 
 apps:
   ci-testing:
-    command: gosherve
+    command: helloserver
     plugs:
       - home
       - network
@@ -26,20 +25,12 @@ architectures:
   - build-on: arm64
 
 parts:
-  gosherve:
+  hello:
     plugin: go
-    source: https://github.com/jnsgruk/gosherve
+    source: https://github.com/golang/example
     source-type: git
-    source-tag: "$SNAPCRAFT_PROJECT_VERSION"
     build-snaps: [go]
-    build-environment:
-      - CGO_ENABLED: "0"
-      - LDFLAGS: "-s -w"
     override-build: |
-      export LDFLAGS="${LDFLAGS} -X 'main.version=${SNAPCRAFT_PROJECT_VERSION}'"
-      export LDFLAGS="${LDFLAGS} -X 'main.commit=$(git rev-parse HEAD)'"
-
-      go build -ldflags "${LDFLAGS}" ./cmd/gosherve
-      cp gosherve $SNAPCRAFT_PART_INSTALL/gosherve
-    stage:
-      - gosherve
+      cd helloserver
+      go build -o helloserver ./server.go
+      cp helloserver $CRAFT_PART_INSTALL/helloserver

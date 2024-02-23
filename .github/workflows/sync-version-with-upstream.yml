@@ -3,7 +3,7 @@ name: Update
 on:
   # Runs at 10:00 UTC every day
   schedule:
-    - cron:  '0 10 * * *'
+    - cron: "0 10 * * *"
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🔄 Sync version with upstream
-        uses: jnsgruk/snapcrafters-ci/sync-version@fix-screenshots-symlinks
+        uses: jnsgruk/snapcrafters-ci/sync-version@check-team-membership
         with:
           token: ${{ secrets.SNAPCRAFTERS_BOT_COMMIT }}
           update-script: |
